@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends 'homepage.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">PLACES TO VISIT</h4>
+                  <form class="forms-sample" method="post" action="{% url 'saveproduct' %}" enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleSelectGender">COUNTRY</label>
+                        <select class="form-control" id="exampleSelectGender" name="country">
+                          <option>select country</option>
+                          {% for d in data %}
+                          <option>{{d.country}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                        <div class="form-group">
+                      <label for="exampleSelectGender">DESCRIPTION</label>
+                        <select class="form-control"  name="description">
+                          <option>select description </option>
+                          {% for d in data %}
+                          <option>{{d.description}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                      <label for="exampleInputCity1">PLACE</label>
+                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="place" name="place">
+                    </div>
+                      <div class="form-group">
+                      <label for="exampleInputCity1">PRICE RANGE</label>
+                      <input type="text" class="form-control" placeholder="price" name="price">
+                    </div>
+
+                     <div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" name="image" >
+                     </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   {% if messages %}
+      {% for i in messages %}
+            {% if i.tags == 'warning' %}
+                <script>
+                  swal('{{i}}','','warning');
+                </script>
+            {% elif i.tags == 'error');
+                <script>
+                  swal('{{i}}','','error');
+                </script>
+            {% else %}
+                <script>
+                  swal('{{i}}','','success');
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
+{% endblock %}
